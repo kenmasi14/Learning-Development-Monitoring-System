@@ -1,0 +1,29 @@
+-- Table: employees
+CREATE TABLE employees (
+  employee_id INT AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(255) NOT NULL,
+  last_name VARCHAR(255) NOT NULL,
+  middle_name VARCHAR(255),
+  position VARCHAR(255) NOT NULL
+);
+
+-- Table: employee_profiles
+CREATE TABLE employee_profiles (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  employee_id INT,
+  username VARCHAR(255) NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
+);
+
+-- Table: training
+CREATE TABLE training (
+  training_id INT AUTO_INCREMENT PRIMARY KEY,
+  training_name VARCHAR(255) NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  trainer_name VARCHAR(255) NOT NULL,
+  date_attended DATE NOT NULL,
+  date_completed DATE NOT NULL,
+  employee_id INT,
+  FOREIGN KEY (employee_id) REFERENCES employees(employee_id) ON DELETE CASCADE
+);

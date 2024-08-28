@@ -1,0 +1,117 @@
+/* EmployeeListView.css */
+/* Add any additional styling for EmployeeListView if needed */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  
+  .modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .close {
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+
+  /* EmployeeListView.css */
+.employee-list-container {
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.refresh-button.spinning {
+  animation: spin 1s infinite linear;
+}
+
+.actionTable{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+.refresh-button {
+  background-color: #0b5b90;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.refresh-button:hover {
+  background-color: #2980b9;
+}
+
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.modern-table th, .modern-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.modern-table th {
+  background-color: #3498db;
+  color: white;
+  text-align: center;
+}
+
+.delete-button, .add-training-button, .view-button {
+  background-color: #e74c3c;
+  color: white;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.add-training-button {
+  background-color: #2ecc71;
+}
+
+.view-button {
+  background-color: #3498db;
+}
+
+.delete-button:hover, .add-training-button:hover, .view-button:hover {
+  background-color: #c0392b;
+}
+
+.add-training-button:hover {
+  background-color: #27ae60;
+}
+
+.view-button:hover {
+  background-color: #2980b9;
+}

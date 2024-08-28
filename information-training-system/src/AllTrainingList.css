@@ -1,0 +1,153 @@
+/* src/components/AllTrainingList.css */
+
+.training-list {
+    margin: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .refresh-button {
+    background-color: #004d99;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    margin-left: 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .refresh-button:hover {
+    background-color: #003366;
+  }
+  
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  th, td {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f8f8f8;
+    color: #333;
+    font-weight: bold;
+  }
+  
+  td {
+    word-break: break-word;
+  }
+  
+  .view-certificate-btn {
+    color: #28a745;
+    background: none;
+    border: none;
+    font-size: 14px;
+  }
+  
+  .view-certificate-btn:hover {
+    color: #218838;
+  }
+  
+  .print-certificate-btn {
+    color: #007bff;
+    background: none;
+    border: none;
+    font-size: 14px;
+    margin-left: 10px;
+  }
+  
+  .print-certificate-btn:hover {
+    color: #0056b3;
+  }
+  
+  .no-certificate {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 80%;
+    max-height: 80%;
+    overflow: auto;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .modal-content img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .search-input {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    max-width: 350px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .print-btn-container {
+    margin-top: 20px;
+    text-align: right;
+  }
+  
+  .print-btn-container button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .print-btn-container button:hover {
+    background-color: #0056b3;
+  }
+  

@@ -1,0 +1,125 @@
+.profile-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: rgba(228, 214, 214, 0.388);
+  text-align: center;
+  padding: 25px;
+  border-radius: 25px;
+}
+
+.avatar-section {
+  position: relative;
+}
+
+.avatar-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 0.5rem outset rgb(10, 148, 72);
+  outline: 0.5rem solid rgb(0, 234, 255);
+}
+
+.upload-input {
+  display: none;
+}
+
+.camera-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+.profile-details {
+  background-color: rgb(42, 223, 145);
+  padding: 20px;
+  border-radius: 25px;
+}
+
+.training-section {
+  background-color: aliceblue;
+  padding: 10px;
+  border-radius: 25px;
+  overflow: visible;
+  max-width: 100%;
+  flex-direction: column;
+}
+
+.filter-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.training-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.training-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 100%;
+  display: flex;
+}
+
+.training-card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.certificate-image-container {
+  width: 280px;
+  display: flex;
+}
+
+.training-card-content {
+  padding: 10px;
+}
+
+.certificate-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+.modern-input {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-width: 300px;
+}
+
+.no-certificate {
+  color: #888;
+  font-size: 16px;
+  text-align: center;
+}
