@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const util = require('util');
 const multer = require('multer'); 
 const path = require('path');
+require('dotenv').config();
 
 const app = express();
 
@@ -14,10 +15,10 @@ app.use(bodyParser.json());
 
 const db = mysql.createPool({
   connectionLimit: 10,
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'training_data',
+  host: process.env.DB_HOST, // Database host
+  user: process.env.DB_USER, // Database user
+  password: process.env.DB_PASSWORD, // Database password
+  database: process.env.DB_NAME // Database name
 });
 
 // Use util.promisify to convert callback-style queries to promises
@@ -414,6 +415,8 @@ app.delete('/employees/:employeeId', async (req, res) => {
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
+
+module.exports = db;
 
 const PORT = 5000;
 
