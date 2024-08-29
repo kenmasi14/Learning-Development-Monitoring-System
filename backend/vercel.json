@@ -1,15 +1,16 @@
 {
     "version": 2,
     "builds": [
-      {
-        "src": "api/index.js",
-        "use": "@vercel/node"
-      }
+      { "src": "backend/server.js", "use": "@vercel/node" }
     ],
     "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "/api/index.js"
-      }
-    ]
+      { "src": "/(.*)", "dest": "backend/server.js" }
+    ],
+    "env": {
+      "DB_HOST": "13.229.240.147",
+      "DB_USER": "admin",
+      "DB_PASSWORD": "admin",
+      "DB_NAME": "training_data"
+    }
   }
+  
