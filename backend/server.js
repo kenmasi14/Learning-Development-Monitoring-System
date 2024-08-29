@@ -4,7 +4,7 @@ const cors = require('cors');
 const mysql = require('mysql');
 const bcrypt = require('bcrypt');
 const util = require('util');
-const multer = require('multer'); 
+const multer = require('multer');
 const path = require('path');
 require('dotenv').config();
 
@@ -27,6 +27,9 @@ module.exports = db;
 const queryAsync = util.promisify(db.query).bind(db);
 
 app.options('*', cors());
+
+
+
 
 // Multer storage configuration
 const storage = multer.diskStorage({
@@ -115,7 +118,7 @@ app.put('/updateEmployeeProfile/:employeeId', (req, res) => {
 
 app.put('/employees/updateProfile/:employeeId', (req, res) => {
   const employeeId = req.params.employeeId;
-  const { birthday, office,religion,email, age, mobile_number } = req.body;
+  const { birthday, office, religion, email, age, mobile_number } = req.body;
 
   // SQL query to update the employee profile with the new details
   const sql = `
@@ -123,7 +126,7 @@ app.put('/employees/updateProfile/:employeeId', (req, res) => {
     SET birthday = ?, office = ?, religion = ?, email = ?, age= ?, mobile_number = ?
     WHERE employee_id = ?
   `;
-  
+
   // Execute the SQL query with the provided parameters
   db.query(sql, [birthday, office, religion, email, age, mobile_number, employeeId], (err, result) => {
     if (err) {
@@ -137,6 +140,7 @@ app.put('/employees/updateProfile/:employeeId', (req, res) => {
     }
   });
 });
+
 
 // Route to retrieve employee profile in view-only mode
 app.get('/viewEmployeeProfile/:employeeId', async (req, res) => {
@@ -167,6 +171,12 @@ app.get('/viewEmployeeProfile/:employeeId', async (req, res) => {
     res.status(500).json({ success: false, error: 'Internal Server Error' });
   }
 });
+
+
+
+
+
+
 
 // Admin login route
 app.post('/admin/login', (req, res) => {
@@ -222,7 +232,7 @@ app.post('/training/add', upload.single('imgCert'), (req, res) => {
     (err, result) => {
       if (err) {
         console.error('Error adding training record:', err);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
+        res.status(500).json({ success: false, message: 'Internal server error' });
       } else {
         res.json({ success: true, message: 'Training record added successfully' });
       }
@@ -230,19 +240,184 @@ app.post('/training/add', upload.single('imgCert'), (req, res) => {
   );
 });
 
-// Default route
-app.get('/', (req, res) => {
-  res.send('API is working!');
+// Fetch all employees route
+app.get('/employees', (req, res) => {
+  const sql = 'SELECT * FROM employees';
+
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error('Error fetching employee data:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      res.json(results);
+    }
+  });
 });
 
-// Start the server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+// Login route
+
+app.post('/employees/login', async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const result = await queryAsync('SELECT * FROM employee_profiles WHERE username = ?', [username]);
+
+    if (result.length > 0) {
+      const hashedPassword = result[0].password;
+
+      const isPasswordValid = await bcrypt.compare(password, hashedPassword);
+
+      if (isPasswordValid) {
+        const employeeId = result[0].employee_id; // Use the correct column name
+        res.json({ success: true, employeeId });
+      } else {
+        res.json({ success: false, message: 'Invalid credentials' });
+      }
+    } else {
+      res.json({ success: false, message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
 });
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error('Unexpected Error:', err);
-  res.status(500).json({ success: false, error: 'Something went wrong!' });
+// Employee Detail Page route
+// Employee Detail Page route
+app.get('/employeeDetailPage/:employeeId', async (req, res) => {
+  const employeeId = req.params.employeeId;
+
+  try {
+    // Fetch employee details along with username from employee_profiles table
+    const [profileResults] = await queryAsync(
+      `SELECT 
+         e.employee_id,
+         e.first_name,
+         e.last_name,
+         e.middle_name,
+         e.position,
+         ep.username,
+         ep.birthday,
+         ep.office,
+         ep.email,
+         ep.age,
+         ep.religion,
+         ep.mobile_number,
+         ep.picture_filename
+       FROM employees e
+       JOIN employee_profiles ep ON e.employee_id = ep.employee_id
+       WHERE e.employee_id = ?`,
+      [employeeId]
+    );
+    console.log('Employee Data:', profileResults);
+
+    if (!profileResults) {
+      return res.status(404).json({ success: false, error: 'Employee not found' });
+    }
+
+    // Extract employee details
+    const employeeDetails = {
+      employee_id: profileResults.employee_id,
+      first_name: profileResults.first_name,
+      last_name: profileResults.last_name,
+      middle_name: profileResults.middle_name,
+      position: profileResults.position,
+      username: profileResults.username,
+      birthday: profileResults.birthday,
+      office: profileResults.office,
+      email: profileResults.email,
+      age: profileResults.age,
+      religion: profileResults.religion,
+      mobile_number: profileResults.mobile_number,
+      picture_filename: profileResults.picture_filename
+    };
+
+    res.json({ success: true, employeeDetails });
+  } catch (error) {
+    console.error('Error fetching employee details:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+
+
+app.get('/employees/:employeeId/training', async (req, res) => {
+  const employeeId = req.params.employeeId;
+
+  try {
+    const results = await queryAsync('SELECT * FROM training WHERE employee_id = ?', [employeeId]);
+
+    if (!results || results.length === 0) {
+      return res.status(404).json({ success: false, error: 'No training records found' });
+    }
+
+    const trainingDetails = results;
+    console.error(trainingDetails); // Log the retrieved training details
+    res.json({ success: true, trainingDetails });
+  } catch (error) {
+    console.error('Error fetching training details:', error);
+    res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
+});
+
+
+// Fetch employee details and training records route
+app.get('/employees/:employeeId', (req, res) => {
+  const employeeId = req.params.employeeId;
+
+  const sql = `
+    SELECT employees.*, employee_profiles.*, training.* 
+    FROM employees 
+    LEFT JOIN employee_profiles ON employees.employee_id = employee_profiles.employee_id
+    LEFT JOIN training ON employees.employee_id = training.employee_id
+    WHERE employees.employee_id = ?
+  `;
+
+  db.query(sql, [employeeId], (err, results) => {
+    if (err) {
+      console.error('Error fetching employee details:', err);
+      res.status(500).json({ success: false, message: 'Internal server error' });
+    } else {
+      const employee = results[0];
+      const training = results.map(row => ({
+        training_id: row.training_id,
+        training_name: row.training_name,
+        description: row.description,
+        date_attended: row.date_attended,
+        date_completed: row.date_completed,
+        trainer_name: row.trainer_name
+      }));
+
+      res.json({ success: true, employee, training });
+    }
+  });
+});
+
+
+
+
+// Delete employee route
+app.delete('/employees/:employeeId', async (req, res) => {
+  const employeeId = req.params.employeeId;
+
+  try {
+    const deleteEmployeeQuery = 'DELETE FROM employees WHERE employee_id = ?';
+    const deleteTrainingQuery = 'DELETE FROM training WHERE employee_id = ?';
+
+    await queryAsync(deleteEmployeeQuery, [employeeId]);
+    await queryAsync(deleteTrainingQuery, [employeeId]);
+
+    res.json({ success: true, message: 'Employee and associated training records deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting employee:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+});
+
+
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
