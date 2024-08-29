@@ -398,7 +398,6 @@ app.delete('/employees/:employeeId', async (req, res) => {
   }
 });
 
-app.listen(5000, console.logo("server is running na po"));
 
 // Export the Express API
 module.exports = app;
