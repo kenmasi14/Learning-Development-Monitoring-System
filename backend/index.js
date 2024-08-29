@@ -6,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const util = require('util');
 const multer = require('multer');
 const path = require('path');
+const serverless = require('serverless-http');
 require('dotenv').config();
 
 const app = express();
@@ -421,3 +422,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+module.exports.handler = serverless(app);
