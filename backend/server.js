@@ -21,6 +21,8 @@ const db = mysql.createPool({
   database: process.env.DB_NAME // Database name
 });
 
+module.exports = db;
+
 // Use util.promisify to convert callback-style queries to promises
 const queryAsync = util.promisify(db.query).bind(db);
 
@@ -416,7 +418,7 @@ app.delete('/employees/:employeeId', async (req, res) => {
   }
 });
 
-module.exports = db;
+
 
 const PORT = 5000;
 
