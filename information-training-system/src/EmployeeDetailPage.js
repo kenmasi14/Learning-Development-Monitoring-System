@@ -28,9 +28,6 @@ const EmployeeDetailPage = () => {
 
       // Fetch employee details
       const employeeResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employeeDetailPage/${employeeId}`);
-      if (!employeeResponse.ok) {
-        throw new Error(`HTTP error! Status: ${employeeResponse.status}`);
-      }
       const employeeData = await employeeResponse.json();
       console.log('Employee Data:', employeeData); // Log the employee data
 
@@ -42,10 +39,7 @@ const EmployeeDetailPage = () => {
         }
 
         // Fetch training details
-        const trainingResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/${employeeId}/training`);
-        if (!trainingResponse.ok) {
-          throw new Error(`HTTP error! Status: ${trainingResponse.status}`);
-        }
+        const trainingResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employees/${employeeId}/training`);
         const trainingData = await trainingResponse.json();
         console.log('Training Data:', trainingData); // Log the training data
 
@@ -232,14 +226,6 @@ const EmployeeDetailPage = () => {
                 ))}
               </div>
             </div>
-          )}
-
-          {showModal && (
-            <EmployeeModalEdit
-              employeeDetails={employeeDetails}
-              onUpdateProfile={handleUpdateProfile}
-              onClose={handleCloseModal}
-            />
           )}
         </>
       )}
