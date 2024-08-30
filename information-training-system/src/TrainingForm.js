@@ -30,7 +30,7 @@ const TrainingForm = ({ onClose, employeeId }) => {
     formData.append('employee_id', trainingData.employee_id);
 
     try {
-      const response = await fetch('http://https://pdrrmo-oksi-ldms.vercel.app/training/add', {
+      const response = await fetch('https://learning-development-monitoring-system-server.vercel.app/training/add', {
         method: 'POST',
         body: formData,
       });
