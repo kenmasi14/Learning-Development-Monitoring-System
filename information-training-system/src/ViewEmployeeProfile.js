@@ -18,17 +18,17 @@ const ViewEmployeeProfile = () => {
                 return;
             }
 
-            const employeeResponse = await fetch(`http://localhost:5000/employeeDetailPage/${employeeId}`);
+            const employeeResponse = await fetch(`http://https://pdrrmo-oksi-ldms.vercel.app/employeeDetailPage/${employeeId}`);
             const employeeData = await employeeResponse.json();
 
             if (employeeData.success) {
                 setEmployeeDetails(employeeData.employeeDetails);
 
                 if (employeeData.employeeDetails.picture_filename) {
-                    setAvatar(`http://localhost:5000/assets/employee-images/${employeeData.employeeDetails.picture_filename}`);
+                    setAvatar(`https://pdrrmo-oksi-ldms.vercel.app/assets/employee-images/${employeeData.employeeDetails.picture_filename}`);
                 }
 
-                const trainingResponse = await fetch(`http://localhost:5000/employees/${employeeId}/training`);
+                const trainingResponse = await fetch(`https://pdrrmo-oksi-ldms.vercel.app/employees/${employeeId}/training`);
                 const trainingData = await trainingResponse.json();
 
                 if (trainingData.success) {

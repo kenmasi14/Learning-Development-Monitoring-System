@@ -12,7 +12,7 @@ const TrainingData = ({ onLogin, setAdminAuthenticated }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/admin/login', {
+      const response = await fetch('http://https://pdrrmo-oksi-ldms.vercel.app/admin/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
