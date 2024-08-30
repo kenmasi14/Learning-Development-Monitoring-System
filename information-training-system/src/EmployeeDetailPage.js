@@ -32,7 +32,7 @@ const EmployeeDetailPage = () => {
         setEmployeeDetails(employeeData.employeeDetails);
 
         if (employeeData.employeeDetails.picture_filename) {
-          setAvatar(`hhttps://learning-development-monitoring-system-server.vercel.app/${employeeData.employeeDetails.picture_filename}`);
+          setAvatar(`https://github.com/kenmasi14/Learning-Development-Monitoring-System/tree/main/backend/assets/employee-images/${employeeData.employeeDetails.picture_filename}`);
         }
 
         const trainingResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/${employeeId}/training`);
@@ -78,7 +78,7 @@ const EmployeeDetailPage = () => {
     return (
       <div className="certificate-image-container">
         {imgCert ? (
-          <img src={`https://learning-development-monitoring-system-server.vercel.app/assets/employee-images/${imgCert}`} alt="Certificate" className="certificate-image" />
+          <img src={`https://github.com/kenmasi14/Learning-Development-Monitoring-System/tree/main/backend/assets/employee-images/${imgCert}`} alt="Certificate" className="certificate-image" />
         ) : (
           <div className="no-certificate">No Certificate</div>
         )}
