@@ -49,7 +49,7 @@ const AllTrainingList = () => {
 
   const handlePrintCertificate = (image) => {
     if (image) {
-      const imageUrl = `https://learning-development-monitoring-system-server.vercel.app/assets/employee-images/${image}`;
+      const imageUrl = `https://raw.githubusercontent.com/kenmasi14/Learning-Development-Monitoring-System/main/backend/assets/employee-images/${image}`;
       console.log('Preparing to print certificate...');
       console.log('Image URL:', imageUrl);
 
