@@ -205,7 +205,7 @@ const AllTrainingList = () => {
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content">
             <button className="modal-close" onClick={handleCloseModal}>X</button>
-            <img src={`https://learning-development-monitoring-system-server.vercel.app/assets/employee-images/${modalImage}`} alt="Certificate" />
+            <img src={`https://raw.githubusercontent.com/kenmasi14/Learning-Development-Monitoring-System/main/backend/assets/employee-images/${modalImage}`} alt="Certificate" />
           </div>
         </div>
       )}
