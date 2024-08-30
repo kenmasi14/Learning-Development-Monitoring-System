@@ -21,22 +21,27 @@ const EmployeeDetailPage = () => {
       setLoading(true);
 
       if (!employeeId) {
+        console.error('No employee ID provided');
         setLoading(false);
         return;
       }
 
+      // Fetch employee details
       const employeeResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employeeDetailPage/${employeeId}`);
       const employeeData = await employeeResponse.json();
+      console.log('Employee Data:', employeeData); // Log the employee data
 
       if (employeeData.success) {
         setEmployeeDetails(employeeData.employeeDetails);
 
         if (employeeData.employeeDetails.picture_filename) {
-          setAvatar(`https://github.com/kenmasi14/Learning-Development-Monitoring-System/tree/main/backend/assets/employee-images/${employeeData.employeeDetails.picture_filename}`);
+          setAvatar(`https://raw.githubusercontent.com/kenmasi14/Learning-Development-Monitoring-System/main/backend/assets/employee-images/${employeeData.employeeDetails.picture_filename}`);
         }
 
+        // Fetch training details
         const trainingResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/${employeeId}/training`);
         const trainingData = await trainingResponse.json();
+        console.log('Training Data:', trainingData); // Log the training data
 
         if (trainingData.success) {
           setTrainingDetails(trainingData.trainingDetails);
@@ -78,9 +83,9 @@ const EmployeeDetailPage = () => {
     return (
       <div className="certificate-image-container">
         {imgCert ? (
-          <img src={`https://github.com/kenmasi14/Learning-Development-Monitoring-System/tree/main/backend/assets/employee-images/${imgCert}`} alt="Certificate" className="certificate-image" />
+          <img src={`https://raw.githubusercontent.com/kenmasi14/Learning-Development-Monitoring-System/main/backend/assets/employee-images/${imgCert}`} alt="Certificate" className="certificate-image" />
         ) : (
-          <div className="no-certificate">No Certificate</div>
+          <div className="no-certificate">No Certificate Available</div>
         )}
       </div>
     );
@@ -121,7 +126,6 @@ const EmployeeDetailPage = () => {
 
   const handleUpdateProfile = async (updatedProfile) => {
     try {
-      // Add employeeId to the updatedProfile object
       updatedProfile.employeeId = employeeId;
 
       const response = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employees/updateProfile/${employeeId}`, {
@@ -133,7 +137,6 @@ const EmployeeDetailPage = () => {
       });
       const data = await response.json();
       if (data.success) {
-        // Refresh employee details after updating
         fetchEmployeeAndTrainingDetails();
         setShowModal(false);
       } else {
@@ -144,99 +147,90 @@ const EmployeeDetailPage = () => {
     }
   };
 
-  const fetchEmployeeData = async (employeeId) => {
-    const response = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employees/${employeeId}`);
-    const data = await response.json();
-    return data;
-  };
-
   const formattedBirthday = employeeDetails ?
     new Date(employeeDetails.birthday).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' }) :
     '';
 
-    return (
-      <div className="profile-page">
-        {loading ? (
-          <p>Loading...</p>
-        ) : (
-          <>
-            <div className="top-section">
-              <div className="profile-header">
-                <div className="avatar-section">
-                  <label htmlFor="upload-input">
-                    {avatar ? (
-                      <img
-                        src={avatar}
-                        alt="Avatar"
-                        className="avatar-image"
-                      />
-                    ) : (
-                      <span className="avatar-placeholder">+</span>
-                    )}
-                  </label>
-                  <input
-                    type="file"
-                    id="upload-input"
-                    className="upload-input"
-                    onChange={handleUpload}
-                    accept="image/*"
-                  />
-                  <FaCamera onClick={() => document.getElementById('upload-input').click()} className="camera-icon" />
+  return (
+    <div className="profile-page">
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div className="top-section">
+            <div className="profile-header">
+              <div className="avatar-section">
+                <label htmlFor="upload-input">
+                  {avatar ? (
+                    <img
+                      src={avatar}
+                      alt="Avatar"
+                      className="avatar-image"
+                    />
+                  ) : (
+                    <span className="avatar-placeholder">+</span>
+                  )}
+                </label>
+                <input
+                  type="file"
+                  id="upload-input"
+                  className="upload-input"
+                  onChange={handleUpload}
+                  accept="image/*"
+                />
+                <FaCamera onClick={() => document.getElementById('upload-input').click()} className="camera-icon" />
+              </div>
+
+              {employeeDetails ? (
+                <div className="profile-details">
+                  <h3>Basic Information</h3>
+                  <div className="containerInfo">
+                    <p><strong>Name:</strong> {employeeDetails.first_name} {employeeDetails.last_name}</p>
+                    <p><strong>Birthday:</strong> {formattedBirthday}</p>
+                    <p><strong>Position:</strong> {employeeDetails.position}</p>
+                    <p><strong>Email:</strong> {employeeDetails.email}</p>
+                    <p><strong>Mobile Number:</strong> {employeeDetails.mobile_number}</p>
+                  </div>
                 </div>
-    
-                {employeeDetails ? (
-                  <div className="profile-details">
-                    <h3>Basic Information</h3>
-                    <div className="containerInfo">
-                      <p><strong>Name:</strong> {employeeDetails.first_name} {employeeDetails.last_name}</p>
-                      <p><strong>Birthday:</strong> {formattedBirthday}</p>
-                      <p><strong>Position:</strong> {employeeDetails.position}</p>
-                      <p><strong>Email:</strong> {employeeDetails.email}</p>
-                      <p><strong>Mobile Number:</strong> {employeeDetails.mobile_number}</p>
+              ) : (
+                <p>Employee details not available.</p>
+              )}
+            </div>
+          </div>
+
+          {trainingDetails.length > 0 && (
+            <div className="training-section">
+              <div className="filter-search">
+                <h3>Training Details</h3>
+                <input
+                  type="text"
+                  placeholder="Search training..."
+                  value={searchTerm}
+                  onChange={handleSearch}
+                  className="search-input modern-input"
+                />
+              </div>
+
+              <div className="training-cards">
+                {filteredTrainingDetails.map((training) => (
+                  <div key={training.training_id} className="training-card">
+                    {renderCertificateImage(training.imgCert)}
+                    <div className="training-card-content">
+                      <p><strong>Training Name:</strong> {training.training_name}</p>
+                      <p><strong>Status:</strong> {training.description}</p>
+                      <p><strong>Trainer:</strong> {training.trainer_name}</p>
+                      <p><strong>Date Attended:</strong> {new Date(training.date_attended).toLocaleDateString()}</p>
+                      <p><strong>Date Completed:</strong> {new Date(training.date_completed).toLocaleDateString()}</p>
                     </div>
                   </div>
-                ) : (
-                  <p>Employee details not available.</p>
-                )}
+                ))}
               </div>
             </div>
-    
-            {trainingDetails.length > 0 && (
-              <div className="training-section">
-                <div className="filter-search">
-                  <h3>Training Details</h3>
-                  <input
-                    type="text"
-                    placeholder="Search training..."
-                    value={searchTerm}
-                    onChange={handleSearch}
-                    className="search-input modern-input"
-                  />
-                </div>
-    
-                <div className="training-cards">
-                  {filteredTrainingDetails.map((training) => (
-                    <div key={training.training_id} className="training-card">
-                      {renderCertificateImage(training.imgCert)}
-                      <div className="training-card-content">
-                        <p><strong>Training Name:</strong> {training.training_name}</p>
-                        <p><strong>Status:</strong> {training.description}</p>
-                        <p><strong>Trainer:</strong> {training.trainer_name}</p>
-                        <p><strong>Date Attended:</strong> {new Date(training.date_attended).toLocaleDateString()}</p>
-                        <p><strong>Date Completed:</strong> {new Date(training.date_completed).toLocaleDateString()}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    );
-    
-    
-    
+          )}
+        </>
+      )}
+    </div>
+  );
 };
 
 export default EmployeeDetailPage;
