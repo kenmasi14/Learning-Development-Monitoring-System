@@ -25,17 +25,17 @@ const EmployeeDetailPage = () => {
         return;
       }
 
-      const employeeResponse = await fetch(`http://localhost:5000/employeeDetailPage/${employeeId}`);
+      const employeeResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employeeDetailPage/${employeeId}`);
       const employeeData = await employeeResponse.json();
 
       if (employeeData.success) {
         setEmployeeDetails(employeeData.employeeDetails);
 
         if (employeeData.employeeDetails.picture_filename) {
-          setAvatar(`http://localhost:5000/assets/employee-images/${employeeData.employeeDetails.picture_filename}`);
+          setAvatar(`hhttps://learning-development-monitoring-system-server.vercel.app/${employeeData.employeeDetails.picture_filename}`);
         }
 
-        const trainingResponse = await fetch(`http://localhost:5000/employees/${employeeId}/training`);
+        const trainingResponse = await fetch(`https://learning-development-monitoring-system-server.vercel.app/${employeeId}/training`);
         const trainingData = await trainingResponse.json();
 
         if (trainingData.success) {
@@ -78,7 +78,7 @@ const EmployeeDetailPage = () => {
     return (
       <div className="certificate-image-container">
         {imgCert ? (
-          <img src={`http://localhost:5000/assets/employee-images/${imgCert}`} alt="Certificate" className="certificate-image" />
+          <img src={`https://learning-development-monitoring-system-server.vercel.app/assets/employee-images/${imgCert}`} alt="Certificate" className="certificate-image" />
         ) : (
           <div className="no-certificate">No Certificate</div>
         )}
@@ -93,7 +93,7 @@ const EmployeeDetailPage = () => {
     formData.append('image', file);
 
     try {
-      const response = await fetch(`http://localhost:5000/updateEmployeeProfile/${employeeId}`, {
+      const response = await fetch(`https://learning-development-monitoring-system-server.vercel.app/updateEmployeeProfile/${employeeId}`, {
         method: 'POST',
         body: formData,
       });
@@ -124,7 +124,7 @@ const EmployeeDetailPage = () => {
       // Add employeeId to the updatedProfile object
       updatedProfile.employeeId = employeeId;
 
-      const response = await fetch(`http://localhost:5000/employees/updateProfile/${employeeId}`, {
+      const response = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employees/updateProfile/${employeeId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
@@ -145,7 +145,7 @@ const EmployeeDetailPage = () => {
   };
 
   const fetchEmployeeData = async (employeeId) => {
-    const response = await fetch(`http://localhost:5000/employees/${employeeId}`);
+    const response = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employees/${employeeId}`);
     const data = await response.json();
     return data;
   };

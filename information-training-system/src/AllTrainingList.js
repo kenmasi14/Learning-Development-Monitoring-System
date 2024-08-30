@@ -13,7 +13,7 @@ const AllTrainingList = () => {
 
   useEffect(() => {
     // Fetch all training records
-    axios.get('http://localhost:5000/training/all')
+    axios.get('https://learning-development-monitoring-system-server.vercel.app/training/all')
       .then(response => {
         setTrainingList(response.data.trainingDetails);
         setFilteredTrainingList(response.data.trainingDetails);
@@ -49,7 +49,7 @@ const AllTrainingList = () => {
 
   const handlePrintCertificate = (image) => {
     if (image) {
-      const imageUrl = `http://localhost:5000/assets/employee-images/${image}`;
+      const imageUrl = `https://learning-development-monitoring-system-server.vercel.app/assets/employee-images/${image}`;
       console.log('Preparing to print certificate...');
       console.log('Image URL:', imageUrl);
 
@@ -205,7 +205,7 @@ const AllTrainingList = () => {
         <div className="modal-overlay" onClick={handleCloseModal}>
           <div className="modal-content">
             <button className="modal-close" onClick={handleCloseModal}>X</button>
-            <img src={`http://localhost:5000/assets/employee-images/${modalImage}`} alt="Certificate" />
+            <img src={`https://learning-development-monitoring-system-server.vercel.app/assets/employee-images/${modalImage}`} alt="Certificate" />
           </div>
         </div>
       )}

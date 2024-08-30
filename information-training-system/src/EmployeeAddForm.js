@@ -23,7 +23,7 @@ const EmployeeAddForm = () => {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/employees/add', {
+      const response = await fetch('https://learning-development-monitoring-system-server.vercel.app/employees/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
