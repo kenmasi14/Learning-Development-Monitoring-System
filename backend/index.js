@@ -18,7 +18,7 @@ let db;
 function handleDisconnect() {
   db = mysql.createPool({
     connectionLimit: 10,
-    host: 'http://18.212.126.178/',
+    host: '18.212.126.178',
     user: 'root',
     password: 'your_password_here',
     database: 'training_data',
