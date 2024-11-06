@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -18,10 +20,10 @@ const upload = multer({ storage: storage });
 let db;
 function handleDisconnect() {
   db = mysql.createConnection({
-    host: '18.212.126.178',
-    user: 'root',
-    password: 'your_password_here',
-    database: 'training_data',
+    host: process.env.DB_HOST, // Use environment variable
+    user: process.env.DB_USER, // Use environment variable
+    password: process.env.DB_PASSWORD, // Use environment variable
+    database: process.env.DB_NAME, // Use environment variable
   });
 
   db.connect((err) => {
