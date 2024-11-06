@@ -16,17 +16,17 @@ app.use(bodyParser.json());
 let db;
 
 function handleDisconnect() {
-  db = mysql.createPool({
+  db = mysql.createConnection({
     connectionLimit: 10,
-    host: '18.212.126.178',
-    user: 'root',
-    password: 'your_password_here',
-    database: 'training_data',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,  
     connectTimeout: 10000, // 10 seconds
     acquireTimeout: 10000, // 10 seconds
   });
 
-  db.getConnection((err, connection) => {
+  db.connect((err, connection) => {
     if (err) {
       console.error('Error connecting to the database:', err);
       setTimeout(handleDisconnect, 2000);
