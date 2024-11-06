@@ -18,9 +18,9 @@ let db;
 function handleDisconnect() {
   db = mysql.createPool({
     connectionLimit: 10,
-    host: 'trainingdatabase.cpmomeysg62y.ap-southeast-1.rds.amazonaws.com',
-    user: 'admin',
-    password: 'adminadmin',
+    host: 'http://18.212.126.178/',
+    user: 'root',
+    password: 'your_password_here',
     database: 'training_data',
     connectTimeout: 10000, // 10 seconds
     acquireTimeout: 10000, // 10 seconds
