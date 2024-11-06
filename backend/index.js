@@ -17,11 +17,11 @@ let db;
 
 function handleDisconnect() {
   db = mysql.createPool({
-    connectionLimit: 10,
-    host: '18.212.126.178',
-    user: 'root',
-    password: 'your_password_here',
-    database: 'training_data',
+    connectionLimit: parseInt(process.env.DB_CONNECTION_LIMIT, 10),
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     connectTimeout: 10000, // 10 seconds
     acquireTimeout: 10000, // 10 seconds
   });
