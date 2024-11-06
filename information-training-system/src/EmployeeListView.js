@@ -26,7 +26,7 @@ const EmployeeListView = () => {
 
   const handleDeleteEmployee = async (employeeId) => {
     try {
-      const response = await axios.delete(`https://learning-development-monitoring-system-server.vercel.app/employees/${employeeId}`);
+      const response = await axios.delete(`https://learning-development-monitoring-system.vercel.app/employees/${employeeId}`);
       const data = response.data;
 
       if (data.success) {
@@ -56,7 +56,7 @@ const EmployeeListView = () => {
 
   const fetchEmployeeData = async () => {
     try {
-      const response = await axios.get('https://learning-development-monitoring-system-server.vercel.app/employees');
+      const response = await axios.get('https://learning-development-monitoring-system.vercel.app/employees');
       setEmployeeList(response.data);
     } catch (error) {
       console.error('Error fetching employee data:', error);

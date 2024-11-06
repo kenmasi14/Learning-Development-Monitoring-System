@@ -22,7 +22,7 @@ function App() {
     useEffect(() => {
         const fetchEmployeeData = async () => {
             try {
-                const response = await fetch('https://learning-development-monitoring-system-server.vercel.app/employees');
+                const response = await fetch('https://learning-development-monitoring-system.vercel.app/employees');
                 const data = await response.json();
                 setReloadEmployees(false);
 
@@ -44,7 +44,7 @@ function App() {
 
     const handleAdminLogin = async (credentials) => {
         try {
-            const response = await fetch('https://learning-development-monitoring-system-server.vercel.app/admin/login', {
+            const response = await fetch('https://learning-development-monitoring-system.vercel.app/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ function App() {
 
     const handleEmployeeLogin = async (credentials) => {
         try {
-            const response = await fetch('https://learning-development-monitoring-system-server.vercel.app/employees/login', {
+            const response = await fetch('https://learning-development-monitoring-system.vercel.app/employees/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ function App() {
 
     const handleAddEmployee = async (newEmployee) => {
         try {
-            const response = await fetch('https://learning-development-monitoring-system-server.vercel.app/employees/add', {
+            const response = await fetch('https://learning-development-monitoring-system.vercel.app/employees/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

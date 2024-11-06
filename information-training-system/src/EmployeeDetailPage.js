@@ -128,7 +128,7 @@ const EmployeeDetailPage = () => {
     try {
       updatedProfile.employeeId = employeeId;
 
-      const response = await fetch(`https://learning-development-monitoring-system-server.vercel.app/employees/updateProfile/${employeeId}`, {
+      const response = await fetch(`https://learning-development-monitoring-system.vercel.app/employees/updateProfile/${employeeId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json'
