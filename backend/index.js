@@ -18,7 +18,7 @@ const upload = multer({ storage: storage });
 let db;
 function handleDisconnect() {
   db = mysql.createConnection({
-    host: 'ec2-18-212-126-178.compute-1.amazonaws.com',
+    host: '18.212.126.178',
     user: 'root',
     password: 'your_password_here',
     database: 'training_data',
